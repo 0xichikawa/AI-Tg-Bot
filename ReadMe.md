@@ -31,7 +31,7 @@ OPENAI_API_KEY=your_openai_api_key
 
 3. Run the bot:
 ```bash
-python bot.py
+python src/main.py
 ```
 
 ## Usage Examples 💡
