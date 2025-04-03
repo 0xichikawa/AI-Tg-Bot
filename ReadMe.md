@@ -1,4 +1,4 @@
-# Kokoa Bot 🤖
+# AI Telegram Bot 🤖
 
 A powerful Telegram bot that combines voice interactions, text responses, and GPT-4 capabilities to provide an engaging user experience.
 
@@ -20,7 +20,7 @@ A powerful Telegram bot that combines voice interactions, text responses, and GP
 
 1. Install required packages:
 ```bash
-pip install python-telegram-bot openai python-dotenv
+pip install -r requirements.txt
 ```
 
 2. Create a `.env` file with your API keys:
@@ -47,6 +47,8 @@ python bot.py
 - Whisper AI for voice transcription
 - Text-to-Speech capabilities
 
-## Made with ❤️ by HighTech
+## Contributing
+Contributions are welcome! Feel free to open issues or pull requests.
 
-[Visit Website](https://telegram-miniapp-three.vercel.app/)
+## License
+This project is licensed under the [MIT License](./LICENSE).
