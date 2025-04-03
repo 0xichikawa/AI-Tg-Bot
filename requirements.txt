@@ -1,0 +1,5 @@
+nest_asyncio
+openai
+python-telegram-bot
+dotenv
+requests
