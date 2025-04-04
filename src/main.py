@@ -13,7 +13,7 @@ from telegram.ext import (
 )
 import asyncio
 import telegram.ext.filters as filters
-
+from aiAnswer import generateAnswer
 import os
 import dotenv
 
@@ -60,6 +60,12 @@ logging.basicConfig(
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
+
+async def get_gpt4_response(prompt):
+    answer = generateAnswer(prompt)
+    return f"{answer}"
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     userName = update.message.chat.username
     userId = str(update.message.chat.id)
@@ -87,7 +93,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 {helpText}
 """
 
-    response_text = f"{answer}"
+    response_text = f"{answer}\n"
     await update.message.reply_html(response_text, reply_markup=keyboard_markup)
 
 
@@ -97,8 +103,8 @@ async def ask(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_message != "":
         thinking_message = await update.message.reply_text("🤖 typing...")
         # Await the response from GPT-4
-        answer = "Hi. Welcome to the AI Assistant. How can I assist you today?"
-        response_text = f"{answer}\n"
+        answer = await get_gpt4_response(user_message)
+        response_text = f"{answer}\n\n"
         await thinking_message.edit_text(
             text=response_text, reply_markup=keyboard_markup, parse_mode=ParseMode.HTML
         )
@@ -107,14 +113,14 @@ async def ask(update: Update, context: ContextTypes.DEFAULT_TYPE):
 <b>🪫 Prompt is empty. Please provide a prompt.</b>\n
 for example: <code>/ask What's your name?</code>
 """
-        response_text = f"{answer}\n"
+        response_text = f"{answer}\n\n"
 
         await update.message.reply_html(response_text, reply_markup=keyboard_markup)
 
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     answer = helpText
-    response_text = f"{answer}"
+    response_text = f"{answer}\n"
     await update.message.reply_html(response_text, reply_markup=keyboard_markup)
 
 
@@ -125,7 +131,7 @@ async def helpBtn(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Extract the callback data from the clicked button
     callback_data = query.data
     answer = helpText
-    response_text = f"{answer}"
+    response_text = f"{answer}\n"
     await query.message.reply_html(response_text, reply_markup=keyboard_markup)
 
 def main() -> None:
